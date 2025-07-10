@@ -21,7 +21,7 @@ jobs:
 
       - name: Run Locust Test in Headless Mode
         run: |
-          locust -f ./locust/locustfile.py \
+          locust -f ./locust/locustLMS_EVS.py \
             --headless \
             -u 10 \
             -r 2 \
