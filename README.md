@@ -20,4 +20,14 @@ This project demonstrates load and performance testing using two open-source too
 
 ---
 
+## 🚀 How to Run the Tests
 
+### 🔹 Run with k6:
+```bash
+k6 run ./k6/test-script.js
+```
+
+### 🔹 Run with Locust:
+```bash
+locust -f ./locust/locustfile.py
+```
