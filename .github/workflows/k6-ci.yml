@@ -32,7 +32,7 @@ jobs:
       run: |
         k6 run ./k6/test-script.js --summary-export=summary.json
     - name: Upload report
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: k6-summary
         path: summary.json
