@@ -20,9 +20,13 @@ jobs:
         curl -s https://packagecloud.io/install/repositories/loadimpact/k6/script.deb.sh | sudo bash
         sudo apt install k6
 
-    - name: Run k6 Load Test
+    - name: Run all k6 tests
       run: |
-        k6 run ./k6/test-script.js
+        for file in ./k6/Automation Practice/*.js; do
+          echo "Running $file"
+          k6 run "$file"
+        done
+
 
     - name: Save k6 results
       run: |
