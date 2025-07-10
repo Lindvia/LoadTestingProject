@@ -20,5 +20,4 @@ This project demonstrates load and performance testing using two open-source too
 
 ---
 
-## 📁 Structure
 
