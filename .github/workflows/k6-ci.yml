@@ -1,0 +1,35 @@
+name: k6 Load Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  k6-load-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install k6
+      run: |
+        sudo apt update
+        sudo apt install -y gnupg software-properties-common
+        curl -s https://packagecloud.io/install/repositories/loadimpact/k6/script.deb.sh | sudo bash
+        sudo apt install k6
+
+    - name: Run k6 Load Test
+      run: |
+        k6 run ./k6/test-script.js
+
+    - name: Save k6 results
+      run: |
+        k6 run ./k6/test-script.js --summary-export=summary.json
+    - name: Upload report
+      uses: actions/upload-artifact@v3
+      with:
+        name: k6-summary
+        path: summary.json
+
