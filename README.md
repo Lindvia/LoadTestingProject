@@ -24,7 +24,15 @@ This project demonstrates load and performance testing using two open-source too
 
 ### 🔹 Run with k6:
 ```bash
-k6 run ./k6/test-script.js
+Place all your test scripts inside the `k6/Automation Practice/` folder.
+
+Then run the following command in your terminal:
+
+```bash
+for file in ./k6/Automation Practice/*.js; do
+  echo "Running $file"
+  k6 run "$file"
+done
 ```
 
 ### 🔹 Run with Locust:

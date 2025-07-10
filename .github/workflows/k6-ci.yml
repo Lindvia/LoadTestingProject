@@ -13,27 +13,26 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Install k6
+    - name: Install k6 (stable via Grafana)
       run: |
         sudo apt update
-        sudo apt install -y gnupg software-properties-common
-        curl -s https://packagecloud.io/install/repositories/loadimpact/k6/script.deb.sh | sudo bash
+        sudo apt install -y gnupg curl ca-certificates
+        curl -fsSL https://dl.k6.io/key.gpg | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/k6.gpg
+        echo "deb https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+        sudo apt update
         sudo apt install k6
 
     - name: Run all k6 tests
       run: |
-        for file in ./k6/Automation Practice/*.js; do
+        mkdir -p summary
+        for file in ./k6/Automation_Practice/*.js; do
           echo "Running $file"
-          k6 run "$file"
+          filename=$(basename "$file" .js)
+          k6 run "$file" --summary-export=summary/${filename}.json
         done
 
-
-    - name: Save k6 results
-      run: |
-        k6 run ./k6/test-script.js --summary-export=summary.json
-    - name: Upload report
+    - name: Upload all k6 reports
       uses: actions/upload-artifact@v4
       with:
-        name: k6-summary
-        path: summary.json
-
+        name: k6-summaries
+        path: summary/
